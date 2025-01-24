@@ -18,6 +18,10 @@ void MasterElement::setGLLOrder(u8 Var, u8 polyOrder, f64 epsilon){
     CHECK_FATAL_ASSERT(nVars > Var, "Variable number accessed too large")
     u8 &n = polyOrder; // Alias for simplification
 
+    // --------------------- //
+    // LGL Weights and Nodes //
+    // --------------------- // 
+
     EigenDefs::Array1D<f64> x  = EigenDefs::Array1D<f64>::Zero(n);
     EigenDefs::Array1D<f64> w  = EigenDefs::Array1D<f64>::Zero(n);
     x[0] = -1;              x[n-1] = 1;
@@ -48,19 +52,41 @@ void MasterElement::setGLLOrder(u8 Var, u8 polyOrder, f64 epsilon){
         x[i]     = -xi;
         x[n-i-1] =  xi;
 
-        w[i]     = 2/(n*(n-1)*Polynomials::Legendre(n-1,x[i]*x[i]));
+        w[i]     = 2/(n*(n-1)*std::pow(Polynomials::Legendre(n-1,x[i]),2));
         w[n-1-1] = w[i];
     }
 
     if (n%2 != 0) {
         x[n_2] = 0;
-        w[n_2] = 2/(n*(n-1)*Polynomials::Legendre(n-1,x[n_2]*x[n_2]));
+        w[n_2] = 2/(n*(n-1)*std::pow(Polynomials::Legendre(n-1,x[n_2]),2));
     } 
 
     nodes.push_back(x);
     weights.push_back(w);
 
-    INFO_MSG("Variable %i FEM space set to piecewise LGL-Lagrange polynomials of order %i", Var, polyOrder)
+    // ----------------------------- //
+    // LGL-Lagranges and Derivatives //
+    // ----------------------------- // 
+
+    EigenDefs::Array1D<f64> y = EigenDefs::Array1D<f64>::Zero(x.rows());
+    std::vector<Polynomials::PolyInterp1D> lagrange_;
+    std::vector<Polynomials::PolyInterp1D> d1lagrange_;
+    for (u8 i=0; i<x.rows(); i++){
+        y.setZero();
+        y[i] = 1.;
+
+        Polynomials::PolyInterp1D   lagrange__(x,y);
+        Polynomials::PolyInterp1D d1lagrange__ = lagrange__.derivative();
+
+        // Push to subvector
+        lagrange_.push_back(lagrange__);
+        d1lagrange_.push_back(d1lagrange__);
+    }
+    // Push to vector
+    lagrange.push_back(lagrange_);
+    d1lagrange.push_back(d1lagrange_);
+
+    INFO_MSG("Variable %i - FEM space set to piecewise LGL-Lagrange polynomials of order %i", Var, polyOrder)
 
 }
 

@@ -46,16 +46,58 @@ f64 d3Legendre(u8 n, f64 xi) {
 PolyInterp1D::PolyInterp1D(EigenDefs::Array1D<f64> X, EigenDefs::Array1D<f64> Y) {
 
     CHECK_FATAL_ASSERT(X.rows() == Y.rows(), "inputs should have matching dimensions.")
-    CHECK_FATAL_ASSERT(X.rows() > 255, "Number of interpolating values too high")
+    CHECK_FATAL_ASSERT(X.rows() < 256, "Number of interpolating values too high")
 
-    EigenDefs::Matrix<f64> A = EigenDefs::Matrix<f64>::Ones(X.rows(), X.rows());
-
-    for (u8 i=0; i<X.rows(); i++){
-        A.col(i) = X.pow(X.rows()-(i+1));
+    EigenDefs::Matrix<f64> A = EigenDefs::Matrix<f64>::Zero(X.rows(), X.rows());
+    Eigen::ColPivHouseholderQR<EigenDefs::Matrix<f64>> solver;
+    
+    // Vandermonde matrix
+    for (u8 i=0; i<X.rows(); i++) {
+        A.col(i) = X.pow(i);
     }
-
+    //INFO_MSG("%-4f", A[0,0])
+    solver.compute(A);
+    coeffs = solver.solve(Y.matrix()); // converts array to matrix (basically a vector)
 }
 
 PolyInterp1D::PolyInterp1D(EigenDefs::Array1D<f64> coeffs_) : coeffs(coeffs_) {}
+
+EigenDefs::Array1D<f64> PolyInterp1D::operator()(EigenDefs::Array1D<f64> X) {
+    
+    EigenDefs::Array1D<f64> out(X.rows());
+    
+    for (u8 i=0; i<coeffs.rows(); i++){
+        out += coeffs[i]*X.pow(i);
+    }
+
+    return out;
+}
+
+f64 PolyInterp1D::operator()(f64 X) {
+    
+    f64 out;
+    
+    for (u8 i=0; i<coeffs.rows(); i++){
+        out += coeffs[i]*std::pow(X,i);
+    }
+    
+    return out;
+}
+
+PolyInterp1D PolyInterp1D::derivative() {
+
+    if (coeffs.rows() == 1) {
+        return PolyInterp1D(EigenDefs::Array1D<f64>::Zero(1));
+    }
+    else {
+
+        EigenDefs::Array1D<f64> derivCoeffs(coeffs.rows()-1);
+
+        for (u8 i=1; i<coeffs.rows(); i++){
+            derivCoeffs[i-1] = coeffs[i]*i;
+        };
+        return PolyInterp1D(derivCoeffs);
+    }
+}
 
 } // end Polynomials

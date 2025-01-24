@@ -38,14 +38,6 @@ int main(){
     mastElem.setGLLOrder(2,7);
     mastElem.setGLLOrder(3,7);
 
-    f64 x    = -0.9999;
-    f64 d0 = Polynomials::  Legendre(3, x);
-    f64 d1 = Polynomials::d1Legendre(3, x);
-    f64 d2 = Polynomials::d2Legendre(3, x);
-    f64 d3 = Polynomials::d3Legendre(3, x);
-
-    INFO_MSG("%-4f %-4f %-4f %-4f %-4f", x, d0, d1, d2, d3)
-
 
     //## ============= ##//
     //## Problem Setup ##//

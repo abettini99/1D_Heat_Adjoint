@@ -2,6 +2,7 @@
 
 #include "definesStandard.hpp"
 #include "Eigen/Sparse"
+#include "Eigen/Dense"
 
 /************************************************************************************************************************ 
  *  @brief (Re)defined Eigen's typedefs are placed into this namespace.

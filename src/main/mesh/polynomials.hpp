@@ -82,11 +82,11 @@ class PolyInterp1D{
         /**< Default construction that takes in an array of coefficients C */
         PolyInterp1D(EigenDefs::Array1D<f64> coeffs_);
 
-	    /**< Disabled construction using another PolyInterp1D */
-        PolyInterp1D(const PolyInterp1D&) = delete;
+	    // /**< Disabled construction using another PolyInterp1D */
+        // PolyInterp1D(const PolyInterp1D&) = delete;
 
-        /**< Disabled construction by equating to another PolyInterp1D */
-        PolyInterp1D& operator =(const PolyInterp1D&) = delete;
+        // /**< Disabled construction by equating to another PolyInterp1D */
+        // PolyInterp1D& operator =(const PolyInterp1D&) = delete;
 
         /**< Overloading call operator -> Vector of X position should return interpolated polynomial values */
         EigenDefs::Array1D<f64> operator()(EigenDefs::Array1D<f64> X);

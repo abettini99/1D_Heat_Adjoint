@@ -24,6 +24,7 @@ target_sources(${PROJECT}
         ${PROJECT_SOURCE_DIR}/src/main/preconditioner/incompleteCholesky.cpp
         ${PROJECT_SOURCE_DIR}/src/main/solver/CG.cpp
         ${PROJECT_SOURCE_DIR}/src/main/mesh/mesh.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/mesh/polynomials.cpp
 )
 
 target_include_directories(${PROJECT} 

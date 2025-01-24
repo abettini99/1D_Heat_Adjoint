@@ -7,6 +7,7 @@
 #include "solver/CG.hpp"
 #include "solver/BiCGstab_l_.hpp"
 #include "mesh/mesh.hpp"
+#include "mesh/polynomials.hpp"
 #include "mesh/valueSource.hpp"
 
 #include <vector>
@@ -31,7 +32,20 @@ int main(){
     //## ==================== ##//
     const u32 n = (imax-2)*(jmax-2);     /**< sparse matrix size component (n,n), boundaries excluded */
 
-    Mesh::MasterElement mastElem = Mesh::MasterElement(4,3)
+    Mesh::MasterElement mastElem = Mesh::MasterElement(4,1);
+    mastElem.setGLLOrder(0,7);
+    mastElem.setGLLOrder(1,7);
+    mastElem.setGLLOrder(2,7);
+    mastElem.setGLLOrder(3,7);
+
+    f64 x    = -0.9999;
+    f64 d0 = Polynomials::  Legendre(3, x);
+    f64 d1 = Polynomials::d1Legendre(3, x);
+    f64 d2 = Polynomials::d2Legendre(3, x);
+    f64 d3 = Polynomials::d3Legendre(3, x);
+
+    INFO_MSG("%-4f %-4f %-4f %-4f %-4f", x, d0, d1, d2, d3)
+
 
     //## ============= ##//
     //## Problem Setup ##//
@@ -43,8 +57,6 @@ int main(){
 
     //Mesh::Simplex simplex = Mesh::Simplex(1);
     //Mesh::Cube    cube    = Mesh::Cube(3,"SEM");
-
-    INFO_MSG("simplex.d = Hello World     ");
 
     // //## =============== ##//
     // //## Export solution ##//

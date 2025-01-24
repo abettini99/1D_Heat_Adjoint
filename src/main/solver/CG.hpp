@@ -93,7 +93,7 @@ class CG{
         // ---------------- //
         // member variables //
         // ---------------- // 
-        Eigen::SparseMatrix<f64> &A;     /**< Internal reference of the sparse matrix*/
+        Eigen::SparseMatrix<f64> &A;     /**< Internal reference of the sparse matrix */
         EigenDefs::Vector<f64> rk, rkp1; /**< residual vector */
         EigenDefs::Vector<f64> zk, zkp1; /**< preconditioned residual vector */
         EigenDefs::Vector<f64> pk;       /**< search/conjugate direction vector */

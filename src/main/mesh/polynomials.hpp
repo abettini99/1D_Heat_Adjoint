@@ -76,7 +76,7 @@ class PolyInterp1D{
         // member functions //
         // ---------------- // 
 
-	    /**< Default construction that takes in an X and Y array and fits a polynomial through it */
+        /**< Default construction that takes in an X and Y array and fits a polynomial through it */
         PolyInterp1D(EigenDefs::Array1D<f64> X, EigenDefs::Array1D<f64> Y);
 	    
         /**< Default construction that takes in an array of coefficients C. First element of C is attached to x^0, and 
@@ -90,13 +90,13 @@ class PolyInterp1D{
         f64 operator()(f64 X);
 
         /************************************************************************************************************************ 
-		 *  @brief Returns the derivative of the polynomial as another PolyInterp1D object.
-		 * 
-		 *  @details
-		 *  Basically just multiplies each of the coefficients by the respective exponent of the attached independent variable.
-		 * 
-		 *  @return PolyInterp1D using the derivative's coefficients.
-		 ************************************************************************************************************************/ 
+         *  @brief Returns the derivative of the polynomial as another PolyInterp1D object.
+         * 
+         *  @details
+         *  Basically just multiplies each of the coefficients by the respective exponent of the attached independent variable.
+         * 
+         *  @return PolyInterp1D using the derivative's coefficients.
+         ************************************************************************************************************************/ 
         PolyInterp1D derivative();
 
         // ---------------- //

@@ -5,15 +5,24 @@
 
 namespace Mesh{
 
-MasterElement::MasterElement(u8 nVars_, u8 nDims_) : nVars(nVars_), nDims(nDims_) {
+MasterElement::MasterElement(u8 nDims_) : nDims(nDims_) {
 
-    CHECK_FATAL_ASSERT(nVars > 0, "Number of variables must be bigger than 0")
     CHECK_FATAL_ASSERT(nDims > 0, "Number of dimensions must be bigger than 0")
 
 }
 
-void MasterElement::setGLLOrder(u8 Var, u8 polyOrder, f64 epsilon){
+void MasterElement::setnVars(u8 nVars_) {
 
+    CHECK_FATAL_ASSERT(nDims  > 0, "nDims must be set first before calling upon this function")
+    CHECK_FATAL_ASSERT(nVars_ > 0, "Number of variables must be bigger than 0")
+    nVars = nVars_;
+
+}
+
+void MasterElement::setLGLOrder(u8 Var, u8 polyOrder, f64 epsilon){
+
+    CHECK_FATAL_ASSERT(nDims > 0, "nDims must be set first before calling upon this function")
+    CHECK_FATAL_ASSERT(nVars > 0, "nVars must be set first before calling upon this function")
     CHECK_FATAL_ASSERT(polyOrder > 1, "Polynomial Order must be larger than 1")
     CHECK_FATAL_ASSERT(nVars > Var, "Variable number accessed too large")
     u8 &n = polyOrder; // Alias for simplification
@@ -89,5 +98,12 @@ void MasterElement::setGLLOrder(u8 Var, u8 polyOrder, f64 epsilon){
     INFO_MSG("Variable %i - FEM space set to piecewise LGL-Lagrange polynomials of order %i", Var, polyOrder)
 
 }
+
+Geometry::Geometry(EigenDefs::Array1D<f64> x1) : nElems(nElems), nDims(1) {
+
+    MasterElement = Mesh::MasterElement(nDims);
+    
+}
+
 
 } // end Mesh

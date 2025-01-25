@@ -20,11 +20,11 @@ target_sources(${PROJECT}
     # no need to add headers here, only sources are required
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src/main/core/logger.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/preconditioner/Jacobi.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/preconditioner/incompleteCholesky.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/solver/CG.cpp
         ${PROJECT_SOURCE_DIR}/src/main/mesh/mesh.cpp
         ${PROJECT_SOURCE_DIR}/src/main/mesh/polynomials.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/physics/integrator_dOmega.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/physics/integrator_Omega.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/physics/integrator_assembly.cpp
 )
 
 target_include_directories(${PROJECT} 
@@ -33,11 +33,11 @@ target_include_directories(${PROJECT}
         ${PROJECT_SOURCE_DIR}/src/main/
         ${PROJECT_SOURCE_DIR}/src/main/core/
         ${PROJECT_SOURCE_DIR}/src/main/mesh/
-        ${PROJECT_SOURCE_DIR}/src/main/preconditioner/
-        ${PROJECT_SOURCE_DIR}/src/main/solver/
+        ${PROJECT_SOURCE_DIR}/src/main/physics/
     PUBLIC
         # where the project will look for public headers
         ${PROJECT_SOURCE_DIR}/external/eigen/
+        ${PROJECT_SOURCE_DIR}/external/petsc/
 )
 
 

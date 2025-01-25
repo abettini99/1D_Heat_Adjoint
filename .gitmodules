@@ -1,6 +1,6 @@
 [submodule "external/eigen"]
 	path = external/eigen
 	url = https://gitlab.com/libeigen/eigen.git
-[submodule "external/petsc"]
-	path = external/petsc
-	url = https://gitlab.com/petsc/petsc.git
+[submodule "external/hypre"]
+	path = external/hypre
+	url = https://github.com/hypre-space/hypre.git

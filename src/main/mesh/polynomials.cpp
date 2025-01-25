@@ -90,9 +90,10 @@ PolyInterp1D PolyInterp1D::derivative() {
         return PolyInterp1D(EigenDefs::Array1D<f64>::Zero(1));
     }
     else {
-
+        // The constant drops out, hence the -1
         EigenDefs::Array1D<f64> derivCoeffs(coeffs.rows()-1);
-
+        
+        // Basic differentiation of a*x^n = n*a*x^{n-1}. the coefficient is n*a
         for (u8 i=1; i<coeffs.rows(); i++){
             derivCoeffs[i-1] = coeffs[i]*i;
         };

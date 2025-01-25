@@ -4,11 +4,8 @@
  *    - Type alias: same as typedefs, but allows for templates, e.g. Vector<f64>, Vector<i32>.
  ************************************************************************************************************************/
 #include "CoreIncludes.hpp"
-#include "solver/CG.hpp"
-#include "solver/BiCGstab_l_.hpp"
 #include "mesh/mesh.hpp"
 #include "mesh/polynomials.hpp"
-#include "mesh/valueSource.hpp"
 
 #include <vector>
 #include <fstream>
@@ -22,21 +19,13 @@ int main(){
     //## ================== ##//
     //## Provide parameters ##//
     //## ================== ##//
-    const u32 imax  = 101;              /**< #gridpoints in x */
-    const u32 jmax  = 101;              /**< #gridpoints in y */
-    const f64 Lx[2] = {0., 1.*EIGEN_PI}; /**< domain endpoints in x */
-    const f64 Ly[2] = {0., 1.*EIGEN_PI}; /**< domain endpoints in y */
+    const u32 nElemx  = 10;                /**< #Elements in x */
+    const f64 Lx[2]   = {0., 1.*EIGEN_PI}; /**< domain endpoints in x */
 
-    //## ==================== ##//
-    //## Calculate parameters ##//
-    //## ==================== ##//
-    const u32 n = (imax-2)*(jmax-2);     /**< sparse matrix size component (n,n), boundaries excluded */
-
-    Mesh::MasterElement mastElem = Mesh::MasterElement(4,1);
-    mastElem.setGLLOrder(0,7);
-    mastElem.setGLLOrder(1,7);
-    mastElem.setGLLOrder(2,7);
-    mastElem.setGLLOrder(3,7);
+    EigenDefs::Array1D<f64> x1e = EigenDefs::Array1D<f64>::LinSpaced(nElemx+1, Lx[0], Lx[1]); /**< x1 Endpoints */
+    Mesh::Geometry Domain = Mesh::Geometry(x1e);
+    Domain.MasterElement.setnVars(1);
+    Domain.MasterElement.setLGLOrder(0,7);
 
 
     //## ============= ##//

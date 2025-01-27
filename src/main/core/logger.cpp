@@ -36,8 +36,8 @@ void logOutput(logLevel level, const char* message, ...){
     va_end(argPtr);
 
     // prepend some stuff
-    char outMessage2[msgLength];
-    sprintf(outMessage2, "%s%s\n", levelStrings[level], outMessage);
+    char outMessage2[msgLength+1];
+    snprintf(outMessage2, msgLength+1, "%s%s\n", levelStrings[level], outMessage);
     
     // TODO: Platform-specific output
     printf("%s", outMessage2);

@@ -25,8 +25,7 @@ int main(){
     EigenDefs::Array1D<f64> x1e = EigenDefs::Array1D<f64>::LinSpaced(nElemx+1, Lx[0], Lx[1]); /**< x1 Endpoints */
     Mesh::Geometry Domain = Mesh::Geometry(x1e);
     Domain.MasterElement.setnVars(1);
-    Domain.MasterElement.setLGLOrder(0,7);
-
+    Domain.MasterElement.setLGLOrder(0,8);
 
     //## ============= ##//
     //## Problem Setup ##//

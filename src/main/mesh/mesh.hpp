@@ -77,7 +77,7 @@ class MasterElement{
         // member variables //
         // ---------------- // 
         u8 nVars, nDims;
-        std::vector<EigenDefs::Array1D<f64>> weights;                    /**< Master element weights for reference quadrature */
+	std::vector<EigenDefs::Array1D<f64>> weights;                    /**< Master element weights for reference quadrature */
         std::vector<EigenDefs::Array1D<f64>> nodes;                      /**< Master element nodes for reference quadrature */
         std::vector<std::vector<Polynomials::PolyInterp1D>>   lagrange;  /**< Lagrange functions that fit through master element nodes, access is lagrange[Var][nPoly] */
         std::vector<std::vector<Polynomials::PolyInterp1D>> d1lagrange;  /**< Lagrange functions that fit through master element nodes, access is d1lagrange[Var][nPoly] */

@@ -10,11 +10,20 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 ## ============== ##
 set(PROJECT "HeatAdjoint")
 project(PROJECT)
+set(BUILD_SHARED_LIBS ON)
 
 ## ================= ##
 ## Create Executable ##
 ## ================= ##
 add_executable(${PROJECT} main.cpp)
+add_subdirectory(${PROJECT_SOURCE_DIR}/external/hypre/src)
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_definitions(${PROJECT} PRIVATE RELEASE=1)
+else()
+    target_compile_definitions(${PROJECT} PRIVATE RELEASE=0)
+    # target_compile_options(${PROJECT} PRIVATE Wall Wextra)
+endif()
 
 target_sources(${PROJECT}
     # no need to add headers here, only sources are required
@@ -40,10 +49,10 @@ target_include_directories(${PROJECT}
         ${PROJECT_SOURCE_DIR}/external/petsc/
 )
 
-
 ## ================= ##
 ## Rerout Executable ##
 ## ================= ##
+target_link_libraries(${PROJECT} HYPRE)
 set_target_properties(${PROJECT}
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin

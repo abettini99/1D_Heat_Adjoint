@@ -6,16 +6,16 @@
 #define LOG_WARN_ENABLED  1
 /** Enable logging of info statements */
 #define LOG_INFO_ENABLED  1
-/** Enable logging of debug statements */
-#define LOG_DEBUG_ENABLED 1
-/** Enable logging of trace statements */
-#define LOG_TRACE_ENABLED 1
-
 #if RELEASE == 1
-/** DISABLED --> RELEASE flag has been enabled */ // TODO: Add Doxygen ref?
-#define LOG_DEBUG_ENABLED 0
-/** DISABLED --> RELEASE flag has been enabled */ // TODO: Add Doxygen ref?
-#define LOG_TRACE_ENABLED 0
+    /** DISABLED --> RELEASE flag has been enabled */ // TODO: Add Doxygen ref?
+    #define LOG_DEBUG_ENABLED 0
+    /** DISABLED --> RELEASE flag has been enabled */ // TODO: Add Doxygen ref?
+    #define LOG_TRACE_ENABLED 0
+#else
+    /** Enable logging of debug statements */
+    #define LOG_DEBUG_ENABLED 1
+    /** Enable logging of trace statements */
+    #define LOG_TRACE_ENABLED 1
 #endif
 
 /* list of logging flags (with an equivalant numeric value) */
@@ -27,8 +27,6 @@ typedef enum logLevel{
     LOG_LEVEL_DEBUG = 4, /**< used for debugging events */
     LOG_LEVEL_TRACE = 5, /**< used for tracing events */
 } logLevel;
-
-
 
 /************************************************************************************************************************
 *  @brief   Writes to the console a log message of \p level severity.

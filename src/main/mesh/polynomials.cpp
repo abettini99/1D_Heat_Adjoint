@@ -51,7 +51,7 @@ PolyInterp1D::PolyInterp1D(EigenDefs::Array1D<f64> X, EigenDefs::Array1D<f64> Y)
 
     CHECK_FATAL_ASSERT(X.rows() == Y.rows(), "inputs should have matching dimensions.")
     CHECK_FATAL_ASSERT(X.rows() < 256, "Number of interpolating values too high")
-    if (X.rows() > 7) WARN_MSG("PolyInterp1D(X,Y) : Unknown whether Vandermonde matrix will have issues due to repeated exponentiation with X.size() = %i elements.", X.rows())
+    if (X.rows() > 8) WARN_MSG("PolyInterp1D(X,Y) : Unknown whether Vandermonde matrix will have issues due to repeated exponentiation with X.size() = %i elements.", X.rows())
 
     EigenDefs::Matrix<f64> A = EigenDefs::Matrix<f64>::Zero(X.rows(), X.rows());
     Eigen::ColPivHouseholderQR<EigenDefs::Matrix<f64>> solver;
@@ -68,7 +68,7 @@ PolyInterp1D::PolyInterp1D(EigenDefs::Array1D<f64> X, EigenDefs::Array1D<f64> Y)
     TRACE_MSG("PolyInterp1D(X,Y) : Passed solver step") 
     
     // DEBUG SUMMARY
-    #if RELEASE==0
+    #if RELEASE == 0
         std::stringstream printArr;
         printArr << std::fixed << std::setprecision( 4 );
         // print A

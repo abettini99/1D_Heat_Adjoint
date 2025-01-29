@@ -17,6 +17,7 @@ set(BUILD_SHARED_LIBS ON)
 ## ================= ##
 add_executable(${PROJECT} main.cpp)
 add_subdirectory(${PROJECT_SOURCE_DIR}/external/hypre/src)
+find_package(MPI REQUIRED)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(${PROJECT} PRIVATE RELEASE=1)
@@ -52,8 +53,11 @@ target_include_directories(${PROJECT}
 ## ================= ##
 ## Rerout Executable ##
 ## ================= ##
-target_link_libraries(${PROJECT} HYPRE)
+target_link_libraries(${PROJECT}
+    PRIVATE
+    HYPRE MPI::MPI_CXX
+)
 set_target_properties(${PROJECT}
     PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
+        RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
 )

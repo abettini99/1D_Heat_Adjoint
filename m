@@ -17,7 +17,7 @@ rm -rf ${PROJECTDIR}/bin
 PROJECTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 let NPROCS=$(nproc | sed 's/[^0-9]//g')/2 # FLOOR DIVISION HERE
 
-# Compile + Link
+# CMake -> Make
 if [ "$1" == "o" ]; then
     cmake -B ${PROJECTDIR}/build/ -S ${PROJECTDIR}/. -DCMAKE_BUILD_TYPE=Release
 elif [ "$1" == "d" ]; then
@@ -26,4 +26,5 @@ else
     echo "Invalid argument"
     exit
 fi
+# Compile + Link
 cmake --build ${PROJECTDIR}/build/ -j $NPROCS

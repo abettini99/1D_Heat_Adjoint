@@ -48,14 +48,15 @@ class MasterElement{
          *  Adopted from <a href="https://colab.research.google.com/github/caiociardelli/sphglltools/blob/main/doc/L3_Gauss_Lobatto_Legendre_quadrature.ipynb#scrollTo=Yi60qASPO7tg">here</a>.
          * 
          *  @param Var        Variable who's space is to be set.
-         *  @param polyOrder  Lagrange polynomial order.
-         * 
+         *  @param ...        Variadic argument of the LGL-Lagrange polynomial orders used in the tensorgrid.
+	 *                    The total number of variadic arguments must must match nDims. Order is x,y,z, ... 
+         *                    Should be a u8, but variadic argument promotes it to i32. So make sure it is u8 as input. 
          *  @return None
          ************************************************************************************************************************/ 
-        void setLGLOrder(u8 Var, u8 polyOrder, f64 epsilon=1e-15);
-	    
+	void setLGLOrder(u8 Var, ...);
+	
         /**< Sets the Gauss-Lagrange polynomial order TODO: implement, used for pressure in a ((P_n^u)^3 U (P_{n-2}^p)) space scheme for NS*/
-        void setGaussOrder(u8 Var, u8 polyOrder);
+        void setGaussOrder(u8 Var, ...);
 
         // TMP //
 
@@ -81,7 +82,7 @@ class MasterElement{
         std::vector<EigenDefs::Array1D<f64>> nodes;                      /**< Master element nodes for reference quadrature */
         std::vector<std::vector<Polynomials::PolyInterp1D>>   lagrange;  /**< Lagrange functions that fit through master element nodes, access is lagrange[Var][nPoly] */
         std::vector<std::vector<Polynomials::PolyInterp1D>> d1lagrange;  /**< Lagrange functions that fit through master element nodes, access is d1lagrange[Var][nPoly] */
-
+	std::vector<std::vector<u8>> polyOrders;
 };
 
 
